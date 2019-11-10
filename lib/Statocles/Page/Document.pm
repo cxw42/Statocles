@@ -156,6 +156,7 @@ sub content {
     my ( $self, %vars ) = @_;
     my $content = $self->document->content;
     my $rendered = $self->_render_content_template( $content, \%vars );
+    return $rendered if $self->document->non_markdown;
     return $self->markdown->markdown( $rendered );
 }
 
@@ -208,7 +209,7 @@ sub sections {
     }
     else {
         @sections =
-            map { $self->markdown->markdown( $_ ) }
+            map { $self->document->non_markdown ? $_ : $self->markdown->markdown( $_ ) }
             map { $self->_render_content_template( $_, {} ) }
             split /\R---\R/,
             $self->document->content;

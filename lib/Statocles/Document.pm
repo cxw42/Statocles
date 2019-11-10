@@ -82,9 +82,24 @@ has status => (
     default => 'published',
 );
 
+=attr non_markdown
+
+If true, the L<content|/content> is assumed to be HTML, not Markdown.
+
+=cut
+
+has non_markdown => (
+    is => 'ro',
+    isa => Bool,
+    lazy => 1,
+    default => 0,
+);
+
+
 =attr content
 
-The raw content of this document, in markdown. This is everything below
+The raw content of this document, in markdown (unless
+L<non_markdown|/non_markdown> is set). This is everything below
 the ending C<---> of the frontmatter.
 
 =cut
